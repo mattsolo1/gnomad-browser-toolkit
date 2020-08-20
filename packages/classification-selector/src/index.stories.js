@@ -12,6 +12,7 @@ const simpleClassifications = [
       { name: 'simple category 1', itemCount: 5, color: '#7fc97f' },
       { name: 'simple category 2', itemCount: 3, color: '#beaed4' },
       { name: 'simple category 3', itemCount: 2, color: '#fdc086' },
+      { name: 'simple category 4', itemCount: 8, color: '#fdc086' },
     ],
     getCategoryValueOfItem: ({ simpleCategory }) => simpleCategory,
   },
@@ -98,6 +99,11 @@ const items = [
     name: 'item j',
     simpleCategory: 'simple category 2',
     hierarchicalClassification: ['category 1-1--2', 'category 1-2--3', 'category 1-3--1'],
+  },
+  {
+    name: 'item z',
+    simpleCategory: 'simple category 4',
+    hierarchicalClassification: ['category 1-1--2', 'category 1-2--3', 'category 1-3--2'],
   },
 ]
 
