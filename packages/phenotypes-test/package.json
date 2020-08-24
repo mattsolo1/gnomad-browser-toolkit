@@ -10,11 +10,9 @@
     "jest": "jest --coverage",
     "jest:watch": "jest --watch",
     "storybook": "start-storybook --port 3200",
-    "cypress:open": "cypress open",
     "clean": "rm -rf lib",
     "typecheck": "tsc --noEmit",
     "tsc:declaration": "tsc --declaration --emitDeclarationOnly --outDir lib",
-    "build": "yarn clean && yarn typecheck && yarn tsc:declaration && yarn rollup && cp src/cypressTestDataAttrs.json lib/",
     "rollup": "IS_ROLLUP=true rollup -c"
   },
   "peerDependencies": {

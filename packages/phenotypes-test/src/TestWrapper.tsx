@@ -1,9 +1,7 @@
 import React from 'react'
 import { Grid, Typography, ThemeProvider, createMuiTheme, Container } from '@material-ui/core'
 import ClassificationViewer, { Props as ClassificationViewerProps } from './ClassificationViewer'
-import useInternalState from './useClassificationSelectorState'
 
-const cypressTestDataAttrs = require('./cypressTestDataAttrs.json')
 
 const {
   selectedItemsContainerCypressDataAttr,
