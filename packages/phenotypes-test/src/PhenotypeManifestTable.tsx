@@ -24,6 +24,8 @@ const Styles = styled.div`
   display: flex;
   flex-direction: row;
   padding: 1rem;
+  font-family: -apple-system, system-ui, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue',
+    Ubuntu, Arial, sans-serif;
 
   table {
     border-spacing: 0;
@@ -347,12 +349,20 @@ const Download = styled.div`
 const Sidebar = styled.div`
   display: flex;
   flex-direction: column;
+  min-width: 400px;
+  max-width: 400px;
 `
 
 const Checkboxes = styled.div`
   display: flex;
   flex-direction: column;
-  width: 250px;
+  min-width: 400px;
+  max-width: 400px;
+`
+
+const ClassificationViewerFrame = styled.div`
+  max-height: 700px;
+  overflow-y: scroll;
 `
 
 function getRandomColor() {
@@ -372,7 +382,8 @@ function App() {
     saigeHeritability: false,
     nCases: false,
     nControls: false,
-    downloads: true
+    downloads: true,
+    md5: false
   })
 
   const groupedByTraitType = groupBy(data, ({ trait_type }) => trait_type)
@@ -381,7 +392,7 @@ function App() {
     return {
       name: firstPhenotype.trait_type,
       itemCount: phenotypesInGroup.length,
-      color: getRandomColor()
+      color: 'black'
     }
   })
 
@@ -392,7 +403,7 @@ function App() {
       return {
         name: firstPhenotype[field],
         itemCount: phenotypesInGroup.length,
-        color: getRandomColor()
+        color: 'black'
       }
     })
     return categories
@@ -406,7 +417,6 @@ function App() {
         const path = firstPhenotype.category
           ? firstPhenotype.category.split(/\s>\s|\s\|\s/)
           : ['None']
-        console.log(path)
         return {
           path,
           itemCount,
@@ -433,9 +443,7 @@ function App() {
       name: 'Showcase path',
       type: ClassificationType.Hierarchical,
       categories: ShowcaseCategories,
-      getPathValueOfItem: ({ category }) => category
-          ? category.split(/\s>\s|\s\|\s/)
-          : ['None']
+      getPathValueOfItem: ({ category }) => (category ? category.split(/\s>\s|\s\|\s/) : ['None'])
       // getCategoryValueOfItem: ({ category }) => category
     }
   ]
@@ -447,8 +455,6 @@ function App() {
     hierarchicalLevels,
     setHierarchicalLevel
   } = useClassificationSelectorState({ items: data, classifications })
-
-  console.log('filtered', filteredItems)
 
   const handleChange = event => {
     setVisibleColumns({ ...visibleColumns, [event.target.name]: event.target.checked })
@@ -493,10 +499,10 @@ function App() {
           Header: 'Description',
           accessor: 'description'
         },
-        {
-          Header: 'More',
-          accessor: 'description_more'
-        },
+        // {
+        //   Header: 'More',
+        //   accessor: 'description_more'
+        // },
         {
           Header: 'Category',
           accessor: 'category'
@@ -597,28 +603,39 @@ function App() {
                 </Download>
                 <Download>
                   <FileCopyIcon />
-                  <a>curl</a>
+                  <a>wget tsv</a>
+                </Download>
+                <Download>
+                  <FileCopyIcon />
+                  <a>wget tbi</a>
                 </Download>
               </Downloads>
             )
           }
-        },
-        {
-          Header: 'MD5 tsv',
-          accessor: 'md5_hex'
-        },
-        {
-          Header: 'MD5 tabix',
-          accessor: 'md5_hex_tabix'
         }
       ]
     })
+  }
+
+  if (visibleColumns.md5) {
+    const downloadsColumn = columns.find(c => c.Header === 'Downloads').columns
+    downloadsColumn.push(
+      {
+        Header: 'MD5 tsv',
+        accessor: 'md5_hex'
+      },
+      {
+        Header: 'MD5 tabix',
+        accessor: 'md5_hex_tabix'
+      }
+    )
   }
 
   return (
     <Styles>
       <Sidebar>
         <Checkboxes>
+          <h3>Show columns</h3>
           <FormControlLabel
             control={
               <Checkbox
@@ -685,14 +702,28 @@ function App() {
             }
             label="Downloads"
           />
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={visibleColumns.md5}
+                onChange={handleChange}
+                name="md5"
+                color="primary"
+              />
+            }
+            label="MD5s"
+          />
         </Checkboxes>
-        <ClassificationViewer
-          classifications={classifications}
-          selected={selected}
-          setSelected={setSelected}
-          hierarchicalLevels={hierarchicalLevels}
-          setHierarchicalLevel={setHierarchicalLevel}
-        />
+        <h3>Filter by category</h3>
+        <ClassificationViewerFrame>
+          <ClassificationViewer
+            classifications={classifications}
+            selected={selected}
+            setSelected={setSelected}
+            hierarchicalLevels={hierarchicalLevels}
+            setHierarchicalLevel={setHierarchicalLevel}
+          />
+        </ClassificationViewerFrame>
       </Sidebar>
       <Table columns={columns} data={filteredItems} />
     </Styles>
