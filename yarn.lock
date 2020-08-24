@@ -1245,6 +1245,17 @@
   resolved "https://registry.yarnpkg.com/@fortawesome/fontawesome-free/-/fontawesome-free-5.14.0.tgz#a371e91029ebf265015e64f81bfbf7d228c9681f"
   integrity sha512-OfdMsF+ZQgdKHP9jUbmDcRrP0eX90XXrsXIdyjLbkmSBzmMXPABB8eobUJtivaupucYaByz6WNe1PI1JuYm3qA==
 
+"@gnomad/classification-selector@^0.4.0":
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/@gnomad/classification-selector/-/classification-selector-0.4.0.tgz#317f51818d862aae8f9e178448d517b23d4fdb1a"
+  integrity sha512-56g7TykPyNVj3mq+OVKZV5nXfeEzbVSwNl2iQzRLcCzIsOGi6r7637JtZ37r1O+To1hr/9jF6iptqXbZuLdC/w==
+  dependencies:
+    "@material-ui/core" "4.10.2"
+    "@material-ui/icons" "4.9.1"
+    "@material-ui/lab" "4.0.0-alpha.56"
+    fontsource-roboto "2.2.6"
+    lodash "4.17.19"
+
 "@icons/material@^0.2.4":
   version "0.2.4"
   resolved "https://registry.yarnpkg.com/@icons/material/-/material-0.2.4.tgz#e90c9f71768b3736e76d7dd6783fc6c2afa88bc8"

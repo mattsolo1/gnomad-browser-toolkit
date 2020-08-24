@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import styled from 'styled-components'
 import { useTable, useFilters, useGlobalFilter, useAsyncDebounce } from 'react-table'
 // A great library for fuzzy filtering/sorting items
@@ -13,16 +13,16 @@ import FileCopyIcon from '@material-ui/icons/FileCopy'
 import uniqBy from 'lodash/uniqBy'
 import groupBy from 'lodash/groupBy'
 
-// import {  ClassificationType, useAdditivePredicates, useClassificationSelectorState } from ;
-
 import ClassificationViewer, {
-  useInternalState,
+  useClassificationSelectorState,
   ClassificationType
 } from '@gnomad/classification-selector'
 
 console.log(data)
 
 const Styles = styled.div`
+  display: flex;
+  flex-direction: row;
   padding: 1rem;
 
   table {
@@ -313,13 +313,6 @@ function Table({ columns, data }) {
           })}
         </tbody>
       </table>
-      <br />
-      <div>Showing the first 20 results of {rows.length} rows</div>
-      <div>
-        <pre>
-          <code>{JSON.stringify(state.filters, null, 2)}</code>
-        </pre>
-      </div>
     </>
   )
 }
@@ -351,6 +344,17 @@ const Download = styled.div`
   margin-right: 10px;
 `
 
+const Sidebar = styled.div`
+  display: flex;
+  flex-direction: column;
+`
+
+const Checkboxes = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 250px;
+`
+
 function getRandomColor() {
   const letters = '0123456789ABCDEF'
   let color = '#'
@@ -361,7 +365,6 @@ function getRandomColor() {
 }
 
 function App() {
-
   const [visibleColumns, setVisibleColumns] = React.useState({
     analysis: true,
     description: true,
@@ -372,34 +375,80 @@ function App() {
     downloads: true
   })
 
-  // const groupedByTraitType = groupBy(data, ({ trait_type }) => trait_type)
-  // const traitTypeCategories = Object.values(groupedByTraitType).map(phenotypesInGroup => {
-  //   const [firstPhenotype] = phenotypesInGroup
-  //   return {
-  //     name: firstPhenotype.trait_type,
-  //     itemCount: phenotypesInGroup.length,
-  //     color: getRandomColor()
-  //   }
-  // })
+  const groupedByTraitType = groupBy(data, ({ trait_type }) => trait_type)
+  const traitTypeCategories = Object.values(groupedByTraitType).map(phenotypesInGroup => {
+    const [firstPhenotype] = phenotypesInGroup
+    return {
+      name: firstPhenotype.trait_type,
+      itemCount: phenotypesInGroup.length,
+      color: getRandomColor()
+    }
+  })
 
-  // const classifications = [
-  //   {
-  //     name: 'Trait types',
-  //     type: ClassificationType.Simple,
-  //     categories: traitTypeCategories,
-  //     getCategoryValueOfItem: ({ trait_type }) => trait_type
-  //   }
-  // ]
+  const getCategories = (field, groupColors) => {
+    const grouped = groupBy(data, item => item[field])
+    const categories = Object.values(grouped).map(phenotypesInGroup => {
+      const [firstPhenotype] = phenotypesInGroup
+      return {
+        name: firstPhenotype[field],
+        itemCount: phenotypesInGroup.length,
+        color: getRandomColor()
+      }
+    })
+    return categories
+  }
 
-  // console.log(classifications)
+  const ShowcaseCategories = useMemo(
+    () =>
+      Object.values(groupBy(data, ({ category }) => category)).map(phenotypesInGroup => {
+        const itemCount = phenotypesInGroup.length
+        const [firstPhenotype] = phenotypesInGroup
+        const path = firstPhenotype.category
+          ? firstPhenotype.category.split(/\s>\s|\s\|\s/)
+          : ['None']
+        console.log(path)
+        return {
+          path,
+          itemCount,
+          color: getRandomColor()
+        }
+      }),
+    [data]
+  )
 
-  // const {
-  //   filteredItems,
-  //   selected,
-  //   setSelected,
-  //   hierarchicalLevels,
-  //   setHierarchicalLevel
-  // } = useInternalState({ data, classifications })
+  const classifications = [
+    {
+      name: 'Trait types',
+      type: ClassificationType.Simple,
+      categories: traitTypeCategories,
+      getCategoryValueOfItem: ({ trait_type }) => trait_type
+    },
+    {
+      name: 'Sex',
+      type: ClassificationType.Simple,
+      categories: getCategories('pheno_sex', undefined),
+      getCategoryValueOfItem: ({ pheno_sex }) => pheno_sex
+    },
+    {
+      name: 'Showcase path',
+      type: ClassificationType.Hierarchical,
+      categories: ShowcaseCategories,
+      getPathValueOfItem: ({ category }) => category
+          ? category.split(/\s>\s|\s\|\s/)
+          : ['None']
+      // getCategoryValueOfItem: ({ category }) => category
+    }
+  ]
+
+  const {
+    filteredItems,
+    selected,
+    setSelected,
+    hierarchicalLevels,
+    setHierarchicalLevel
+  } = useClassificationSelectorState({ items: data, classifications })
+
+  console.log('filtered', filteredItems)
 
   const handleChange = event => {
     setVisibleColumns({ ...visibleColumns, [event.target.name]: event.target.checked })
@@ -568,80 +617,84 @@ function App() {
 
   return (
     <Styles>
-      {/*<ClassificationViewer
-        classifications={classifications}
-        selected={selected}
-        setSelected={setSelected}
-        hierarchicalLevels={hierarchicalLevels}
-        setHierarchicalLevel={setHierarchicalLevel}
-      />*/}
-      <FormControlLabel
-        control={
-          <Checkbox
-            checked={visibleColumns.description}
-            onChange={handleChange}
-            name="description"
-            color="primary"
+      <Sidebar>
+        <Checkboxes>
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={visibleColumns.description}
+                onChange={handleChange}
+                name="description"
+                color="primary"
+              />
+            }
+            label="Description"
           />
-        }
-        label="Metadata"
-      />
-      <FormControlLabel
-        control={
-          <Checkbox
-            checked={visibleColumns.nCases}
-            onChange={handleChange}
-            name="nCases"
-            color="primary"
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={visibleColumns.nCases}
+                onChange={handleChange}
+                name="nCases"
+                color="primary"
+              />
+            }
+            label="N Cases"
           />
-        }
-        label="N Cases"
-      />
-      <FormControlLabel
-        control={
-          <Checkbox
-            checked={visibleColumns.nControls}
-            onChange={handleChange}
-            name="nControls"
-            color="primary"
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={visibleColumns.nControls}
+                onChange={handleChange}
+                name="nControls"
+                color="primary"
+              />
+            }
+            label="N Controls"
           />
-        }
-        label="N Controls"
-      />
-      <FormControlLabel
-        control={
-          <Checkbox
-            checked={visibleColumns.saigeHeritability}
-            onChange={handleChange}
-            name="saigeHeritability"
-            color="primary"
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={visibleColumns.saigeHeritability}
+                onChange={handleChange}
+                name="saigeHeritability"
+                color="primary"
+              />
+            }
+            label="Saige heritability"
           />
-        }
-        label="Saige heritability"
-      />
-      <FormControlLabel
-        control={
-          <Checkbox
-            checked={visibleColumns.lambda}
-            onChange={handleChange}
-            name="lambda"
-            color="primary"
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={visibleColumns.lambda}
+                onChange={handleChange}
+                name="lambda"
+                color="primary"
+              />
+            }
+            label="Lambda GC"
           />
-        }
-        label="Lambda GC"
-      />
-      <FormControlLabel
-        control={
-          <Checkbox
-            checked={visibleColumns.downloads}
-            onChange={handleChange}
-            name="downloads"
-            color="primary"
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={visibleColumns.downloads}
+                onChange={handleChange}
+                name="downloads"
+                color="primary"
+              />
+            }
+            label="Downloads"
           />
-        }
-        label="Downloads"
-      />
-      <Table columns={columns} data={data} />
+        </Checkboxes>
+        <ClassificationViewer
+          classifications={classifications}
+          selected={selected}
+          setSelected={setSelected}
+          hierarchicalLevels={hierarchicalLevels}
+          setHierarchicalLevel={setHierarchicalLevel}
+        />
+      </Sidebar>
+      <Table columns={columns} data={filteredItems} />
     </Styles>
   )
 }
