@@ -43,6 +43,7 @@
     "match-sorter": "^4.2.0",
     "namor": "^2.0.2",
     "react-table": "^7.5.0",
+    "react-vega": "^7.4.1",
     "react-window": "^1.8.5",
     "styled-components": "^5.1.1"
   }

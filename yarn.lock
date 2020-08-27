@@ -2426,6 +2426,14 @@
     "@types/prop-types" "*"
     csstype "^2.2.0"
 
+"@types/react@^16.9.19":
+  version "16.9.46"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-16.9.46.tgz#f0326cd7adceda74148baa9bff6e918632f5069e"
+  integrity sha512-dbHzO3aAq1lB3jRQuNpuZ/mnu+CdD3H0WVaaBQA8LTT3S33xhVBUj232T8M3tAhSWJs/D/UqORYUlJNl/8VQZg==
+  dependencies:
+    "@types/prop-types" "*"
+    csstype "^3.0.2"
+
 "@types/reactcss@*":
   version "1.2.3"
   resolved "https://registry.yarnpkg.com/@types/reactcss/-/reactcss-1.2.3.tgz#af28ae11bbb277978b99d04d1eedfd068ca71834"
@@ -4910,6 +4918,11 @@ csstype@2.6.11, csstype@^2.2.0, csstype@^2.5.2, csstype@^2.5.7, csstype@^2.6.5, 
   resolved "https://registry.yarnpkg.com/csstype/-/csstype-2.6.11.tgz#452f4d024149ecf260a852b025e36562a253ffc5"
   integrity sha512-l8YyEC9NBkSm783PFTvh0FmJy7s5pFKrDp49ZL7zBGX3fWkO+N4EEyan1qqp8cwPLDcD0OSdyY6hAMoxp34JFw==
 
+csstype@^3.0.2:
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/csstype/-/csstype-3.0.2.tgz#ee5ff8f208c8cd613b389f7b222c9801ca62b3f7"
+  integrity sha512-ofovWglpqoqbfLNOTBNZLSbMuGrblAf1efvvArGKOZMBrIoJeu5UsAipQolkijtyQx5MtAzT/J9IHj/CEY1mJw==
+
 cyclist@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/cyclist/-/cyclist-1.0.1.tgz#596e9698fd0c80e12038c2b82d6eb1b35b6224d9"
@@ -6224,6 +6237,11 @@ fast-json-parse@^1.0.3:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/fast-json-parse/-/fast-json-parse-1.0.3.tgz#43e5c61ee4efa9265633046b770fb682a7577c4d"
   integrity sha512-FRWsaZRWEJ1ESVNbDWmsAlqDk96gPQezzLghafp5J4GUKjbCz3OkAHuZs5TuPEtkbVQERysLp9xv6c24fBm8Aw==
+
+fast-json-patch@^3.0.0-1:
+  version "3.0.0-1"
+  resolved "https://registry.yarnpkg.com/fast-json-patch/-/fast-json-patch-3.0.0-1.tgz#4c68f2e7acfbab6d29d1719c44be51899c93dabb"
+  integrity sha512-6pdFb07cknxvPzCeLsFHStEy+MysPJPgZQ9LbQ/2O67unQF93SNqfdSqnPPl71YMHX+AD8gbl7iuoGFzHEdDuw==
 
 fast-json-stable-stringify@^2.0.0:
   version "2.1.0"
@@ -8545,6 +8563,11 @@ json-stable-stringify-without-jsonify@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/json-stable-stringify-without-jsonify/-/json-stable-stringify-without-jsonify-1.0.1.tgz#9db7b59496ad3f3cfef30a75142d2d930ad72651"
   integrity sha1-nbe1lJatPzz+8wp1FC0tkwrXJlE=
+
+json-stringify-pretty-compact@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/json-stringify-pretty-compact/-/json-stringify-pretty-compact-2.0.0.tgz#e77c419f52ff00c45a31f07f4c820c2433143885"
+  integrity sha512-WRitRfs6BGq4q8gTgOy4ek7iPFXjbra0H3PmDLKm2xnZ+Gh1HUhiKGgCZkSPNULlP7mvfu6FV/mOLhCarspADQ==
 
 json-stringify-safe@~5.0.1:
   version "5.0.1"
@@ -11079,6 +11102,15 @@ react-transition-group@^4.4.0:
     loose-envify "^1.4.0"
     prop-types "^15.6.2"
 
+react-vega@^7.4.1:
+  version "7.4.1"
+  resolved "https://registry.yarnpkg.com/react-vega/-/react-vega-7.4.1.tgz#b81ea5592f68b41b976bcf6948c0bfbefa8e9a2c"
+  integrity sha512-ROlB7cQscHVgwbspmEoeQ9uA1yAPykhaW6XSu+P8XZ7TlSe1pNS3gZvrdh4KIPbwS5mYo6TF0gferOhDH5sBlQ==
+  dependencies:
+    "@types/react" "^16.9.19"
+    fast-deep-equal "^3.1.1"
+    vega-embed "^6.5.1"
+
 react-window@^1.7.1, react-window@^1.8.5:
   version "1.8.5"
   resolved "https://registry.yarnpkg.com/react-window/-/react-window-1.8.5.tgz#a56b39307e79979721021f5d06a67742ecca52d1"
@@ -13518,6 +13550,40 @@ vary@~1.1.2:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/vary/-/vary-1.1.2.tgz#2299f02c6ded30d4a5961b0b9f74524a18f634fc"
   integrity sha1-IpnwLG3tMNSllhsLn3RSShj2NPw=
+
+vega-embed@^6.5.1:
+  version "6.11.1"
+  resolved "https://registry.yarnpkg.com/vega-embed/-/vega-embed-6.11.1.tgz#2f338defa3b4c30aa28c601a6c8a10c27346e214"
+  integrity sha512-NmrqP27buLsuVU07AO2ydreDC9pgCn3VvtRp2ak8V6TBVQNAyUIp0lsdfGfAYPYTA13edol1GAdBFc7E9bo19A==
+  dependencies:
+    fast-json-patch "^3.0.0-1"
+    json-stringify-pretty-compact "^2.0.0"
+    semver "^7.3.2"
+    vega-schema-url-parser "^1.1.0"
+    vega-themes "^2.8.5"
+    vega-tooltip "^0.23.2"
+
+vega-schema-url-parser@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/vega-schema-url-parser/-/vega-schema-url-parser-1.1.0.tgz#39168ec04e5468ce278a06c16ec0d126035a85b5"
+  integrity sha512-Tc85J2ofMZZOsxiqDM9sbvfsa+Vdo3GwNLjEEsPOsCDeYqsUHKAlc1IpbbhPLZ6jusyM9Lk0e1izF64GGklFDg==
+
+vega-themes@^2.8.5:
+  version "2.8.5"
+  resolved "https://registry.yarnpkg.com/vega-themes/-/vega-themes-2.8.5.tgz#f53c96676a1f28872b2c0e924da5f211613ce3a7"
+  integrity sha512-DqNVHZyOtyxsgEy97wfQORw11gDCWR7SIRXyDlqmiwKTLu7Jm+PdOZdw7fNbg0jozywhsPnl0itOj3k9c74CPg==
+
+vega-tooltip@^0.23.2:
+  version "0.23.2"
+  resolved "https://registry.yarnpkg.com/vega-tooltip/-/vega-tooltip-0.23.2.tgz#f4e22c4ce967ce9f1de6518381a74f6fe5102a86"
+  integrity sha512-H7cIA1tZ26H+GJijTi1ZCBg5XWelWUv57ZNJB7No7VL6ZvV8ha7LJrFPvYQadqMP2bSdbbntKMP8oGtsKUFA7A==
+  dependencies:
+    vega-util "^1.14.1"
+
+vega-util@^1.14.1:
+  version "1.15.0"
+  resolved "https://registry.yarnpkg.com/vega-util/-/vega-util-1.15.0.tgz#8098212a8fbb2a3fc0936e14083ef76d01b5f401"
+  integrity sha512-D5jlSI226ieWjCZH9K/0zIxygl0w4W6Fqky+zwwQzymoGwraBPDEhrGh0Uq2sl0Jw6hbD8FlMqiPmlsSkpQ1pw==
 
 verror@1.10.0:
   version "1.10.0"
