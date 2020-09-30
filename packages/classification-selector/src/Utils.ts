@@ -205,9 +205,14 @@ export const getDisplayedHierarchicalCategories = <Item>({
             categoryLookup.set(childNodeId, child)
             leafCategories.push(child)
           } else {
+<<<<<<< Updated upstream
             throw new Error(
               `This child with nodeId ${childNodeId} should have been previously created as a parent in a previous loop iteration`
             )
+=======
+            console.log(category)
+            throw new Error('This should not happen')
+>>>>>>> Stashed changes
           }
         } else {
           child = foundChild
@@ -244,6 +249,7 @@ export const getDisplayedHierarchicalCategories = <Item>({
             parent.children.push(child)
           }
         } else {
+<<<<<<< Updated upstream
           // Convert the leaf to a branch:
           ;((parent as unknown) as DisplayedHierarchicalCategoryBranch).hasChildren = true
           ;((parent as unknown) as DisplayedHierarchicalCategoryBranch).children = [child]
@@ -251,6 +257,11 @@ export const getDisplayedHierarchicalCategories = <Item>({
           // Also remove from list of leaves and add to list of branches:
           leafCategories = leafCategories.filter(({ nodeId }) => nodeId !== parentNodeId)
           branchCategories.push(parent)
+=======
+          console.log(parentNodeId)
+          throw new Error('This should not happen')
+
+>>>>>>> Stashed changes
         }
         parent.itemCount += category.itemCount
       }

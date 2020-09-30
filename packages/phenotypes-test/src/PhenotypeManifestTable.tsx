@@ -5,18 +5,26 @@ import { useTable, useFilters, useGlobalFilter, useAsyncDebounce } from 'react-t
 import matchSorter from 'match-sorter'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Checkbox from '@material-ui/core/Checkbox'
-import data from '../data/200819_pan_ancestry_manifest.json'
 
 import CloudDownloadIcon from '@material-ui/icons/CloudDownload'
 import FileCopyIcon from '@material-ui/icons/FileCopy'
 
-import uniqBy from 'lodash/uniqBy'
+// import uniqBy from 'lodash/uniqBy'
 import groupBy from 'lodash/groupBy'
 
 import ClassificationViewer, {
   useClassificationSelectorState,
   ClassificationType
 } from '@gnomad/classification-selector'
+
+import rawData from '../data/200819_pan_ancestry_manifest.json'
+
+const data = rawData.map(p => {
+  return {
+    categoryPath: p.category ? p.category.split(/\s>\s|\s\|\s/) : ['None'],
+    ...p
+  }
+})
 
 console.log(data)
 
@@ -54,7 +62,15 @@ const Styles = styled.div`
 `
 
 // Define a default UI for filtering
-function GlobalFilter({ preGlobalFilteredRows, globalFilter, setGlobalFilter }) {
+function GlobalFilter({
+  preGlobalFilteredRows,
+  globalFilter,
+  setGlobalFilter
+}: {
+  preGlobalFilteredRows: any
+  globalFilter: any
+  setGlobalFilter: any
+}) {
   const count = preGlobalFilteredRows.length
   const [value, setValue] = React.useState(globalFilter)
   const onChange = useAsyncDebounce(value => {
@@ -414,9 +430,7 @@ function App() {
       Object.values(groupBy(data, ({ category }) => category)).map(phenotypesInGroup => {
         const itemCount = phenotypesInGroup.length
         const [firstPhenotype] = phenotypesInGroup
-        const path = firstPhenotype.category
-          ? firstPhenotype.category.split(/\s>\s|\s\|\s/)
-          : ['None']
+        const path = firstPhenotype.categoryPath
         return {
           path,
           itemCount,
@@ -443,8 +457,7 @@ function App() {
       name: 'Showcase path',
       type: ClassificationType.Hierarchical,
       categories: ShowcaseCategories,
-      getPathValueOfItem: ({ category }) => (category ? category.split(/\s>\s|\s\|\s/) : ['None'])
-      // getCategoryValueOfItem: ({ category }) => category
+      getPathValueOfItem: ({ categoryPath }) => categoryPath
     }
   ]
 
@@ -452,8 +465,10 @@ function App() {
     filteredItems,
     selected,
     setSelected,
-    hierarchicalLevels,
-    setHierarchicalLevel
+    expanded,
+    setExpanded,
+    clearSelectedCategories,
+    selectAllVisibleCategories
   } = useClassificationSelectorState({ items: data, classifications })
 
   const handleChange = event => {
@@ -717,11 +732,13 @@ function App() {
         <h3>Filter by category</h3>
         <ClassificationViewerFrame>
           <ClassificationViewer
+            clearSelectedCategories={clearSelectedCategories}
+            selectAllVisibleCategories={selectAllVisibleCategories}
             classifications={classifications}
             selected={selected}
             setSelected={setSelected}
-            hierarchicalLevels={hierarchicalLevels}
-            setHierarchicalLevel={setHierarchicalLevel}
+            expanded={expanded}
+            setExpanded={setExpanded}
           />
         </ClassificationViewerFrame>
       </Sidebar>
