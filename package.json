@@ -16,5 +16,8 @@
   "workspaces": [
     "packages/*",
     "scripts"
-  ]
+  ],
+  "devDependencies": {
+    "@gnomad/scripts": "workspace:*"
+  }
 }
