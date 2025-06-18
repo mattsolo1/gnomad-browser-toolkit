@@ -10,7 +10,16 @@
   "homepage": "https://github.com/broadinstitute/gnomad-browser-toolkit#readme",
   "bugs": "https://github.com/broadinstitute/gnomad-browser-toolkit/issues",
   "main": "lib/cjs/index.js",
+  "module": "lib/esm/index.js",
   "types": "index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "import": "./lib/esm/index.js",
+      "require": "./lib/cjs/index.js",
+      "default": "./lib/esm/index.js"
+    }
+  },
   "files": [
     "lib",
     "index.d.ts"
@@ -19,7 +28,7 @@
     "access": "public"
   },
   "scripts": {
-    "build": "gnomad-browser-toolkit-scripts build",
+    "build": "gnomad-browser-toolkit-scripts build-with-esm",
     "prepack": "yarn run build",
     "test": "jest --coverage",
     "example": "gnomad-browser-toolkit-scripts example"

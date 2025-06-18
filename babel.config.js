@@ -7,6 +7,13 @@ const config = {
     test: {
       plugins: ['@babel/plugin-transform-runtime'],
     },
+    esm: {
+      presets: [
+        '@babel/preset-typescript',
+        ['@babel/preset-env', { modules: false }],
+        '@babel/preset-react'
+      ],
+    },
   },
 }
 
