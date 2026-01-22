@@ -1,14 +1,15 @@
 import React from 'react'
-import TreeView from '@material-ui/lab/TreeView'
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
-import ChevronRightIcon from '@material-ui/icons/ChevronRight'
-import TreeItem from '@material-ui/lab/TreeItem'
-import Box from '@material-ui/core/Box'
-import Button from '@material-ui/core/Button'
-import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
+import TreeView from '@mui/lab/TreeView'
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
+import ChevronRightIcon from '@mui/icons-material/ChevronRight'
+import TreeItem from '@mui/lab/TreeItem'
+import Box from '@mui/material/Box'
+import Button from '@mui/material/Button'
+import { makeStyles, createStyles } from '@mui/styles'
+import { Theme } from '@mui/material/styles'
 import { StandardLonghandProperties } from 'csstype'
-import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord'
-import ScopedCssBaseline from '@material-ui/core/ScopedCssBaseline'
+import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord'
+import ScopedCssBaseline from '@mui/material/ScopedCssBaseline'
 import { Classification, ClassificationType } from './types'
 import {
   getDisplayedHierarchicalClassification,
@@ -16,7 +17,7 @@ import {
   DisplayedHierarchicalCategory,
 } from './Utils'
 import useInternalState from './useClassificationSelectorState'
-import 'fontsource-roboto'
+import '@fontsource/roboto'
 
 const {
   categoryTreeItemCypressDataAttr,
